@@ -1,6 +1,5 @@
 from tkinter import *
-import PIL
-from PIL import ImageTk,Image
+from PIL import Image, ImageTk
 import pymysql
 from tkinter import messagebox
 from AddBook import *
@@ -8,10 +7,17 @@ from DeleteBook import *
 from ViewBooks import *
 from IssueBook import *
 from ReturnBook import *
-# Add your own database name and password here to reflect in the code
 
 con = pymysql.connect(host="localhost",user="root",password='1234',database='userdata')
 cur = con.cursor()
+
+create_books_table = "CREATE TABLE IF NOT EXISTS books (bookid INT AUTO_INCREMENT PRIMARY KEY, title VARCHAR(255) NOT NULL, author VARCHAR(255) NOT NULL,status ENUM('avail', 'issue') NOT NULL);"
+create_books_issued_table = "CREATE TABLE IF NOT EXISTS books_issued (bookid INT,issueto VARCHAR(255));"
+
+cur.execute(create_books_table)
+cur.execute(create_books_issued_table)
+con.commit()
+con.close()
 
 root = Tk()
 root.title("Library")
@@ -23,7 +29,7 @@ same=True
 n=0.25
 
 # Adding a background image
-background_image =Image.open("libary.png")
+background_image = Image.open("library.png")
 [imageSizeWidth, imageSizeHeight] = background_image.size
 
 newImageSizeWidth = int(imageSizeWidth*n)
@@ -32,7 +38,7 @@ if same:
 else:
     newImageSizeHeight = int(imageSizeHeight*n) 
     
-background_image = background_image.resize((4000,3000), PIL.Image.Resampling.LANCZOS)
+background_image = background_image.resize((4000,3000), Image.Resampling.LANCZOS)
 img = ImageTk.PhotoImage(background_image)
 
 Canvas1 = Canvas(root)
