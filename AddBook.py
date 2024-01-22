@@ -4,28 +4,23 @@ from tkinter import messagebox
 import pymysql
 
 def bookRegister():
-    
     bid = bookInfo1.get()
     title = bookInfo2.get()
     author = bookInfo3.get()
-    status = bookInfo4.get()
-    status = status.lower()
-    
-    #2nd section
-    query='insert into books(bookid, title, author, status)' \
-              ' values(%s,%s,%s,%s,%s,%s,%s,%s)'
-    cur.execute(query,(bookInfo1.get(), bookInfo2.get(), bookInfo3.get(), bookInfo4.get(), status.lower()))
-    con.commit() #to execute the change
-    con.close()
-    messagebox.showinfo('Success', 'Successful Registration.')
-    
-    print(bid)
-    print(title)
-    print(author)
-    print(status)
+    status = bookInfo4.get().lower()  # Convert to lowercase here
 
-
-    root.destroy()
+    # Corrected INSERT INTO query
+    query = 'INSERT INTO books(bookid, title, author, status) VALUES (%s, %s, %s, %s)'
+    
+    try:
+        cur.execute(query, (bid, title, author, status))
+        con.commit()
+        con.close()
+        messagebox.showinfo('Success', 'Successful Registration.')
+        print(bid, title, author, status)
+        root.destroy()
+    except Exception as e:
+        messagebox.showerror('Error', f'Error during registration: {str(e)}')
     
 def addBook(): 
     
@@ -45,7 +40,7 @@ def addBook():
     bookInfo1 = StringVar()
     bookInfo2 = StringVar()
     bookInfo3 = StringVar()
-    bookInfo4=StringVar()
+    bookInfo4 = StringVar()
 
 
     # Enter Table Names here
