@@ -7,7 +7,8 @@ def bookRegister():
     bid = bookInfo1.get()
     title = bookInfo2.get()
     author = bookInfo3.get()
-    status = bookInfo4.get().lower()  # Convert to lowercase here
+    status = bookInfo4.get()
+    status = status.lower()  # Convert to lowercase here
 
     # Corrected INSERT INTO query
     query = 'INSERT INTO books(bookid, title, author, status) VALUES (%s, %s, %s, %s)'
