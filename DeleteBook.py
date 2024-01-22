@@ -14,25 +14,30 @@ bookTable = "books" #Book Table
 
 
 def deleteBook():
-    
     bid = bookInfo1.get()
-    
-    deleteSql = "delete from "+bookTable+" where bid = '"+bid+"'"
-    deleteIssue = "delete from "+issueTable+" where bid = '"+bid+"'"
+
+    # Use placeholders in the SQL queries
+    deleteSql = "DELETE FROM books WHERE bookid = %s"
+    deleteIssue = "DELETE FROM books_issued WHERE bookid = %s"
+
     try:
-        cur.execute(deleteSql)
+        # Pass the bid value as a parameter
+        cur.execute(deleteSql, (bid,))
         con.commit()
-        cur.execute(deleteIssue)
+
+        # Pass the bid value as a parameter
+        cur.execute(deleteIssue, (bid,))
         con.commit()
-        messagebox.showinfo('Success',"Book Record Deleted Successfully")
+
+        messagebox.showinfo('Success', "Book Record Deleted Successfully")
     except:
-        messagebox.showinfo("Please check Book ID")
-    
+        messagebox.showinfo('Error', "Please check Book ID")
 
     print(bid)
 
     bookInfo1.delete(0, END)
     root.destroy()
+
     
 def delete(): 
     
