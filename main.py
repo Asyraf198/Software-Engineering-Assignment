@@ -11,8 +11,8 @@ from ReturnBook import *
 con = pymysql.connect(host="localhost",user="root",password='1234',database='userdata')
 cur = con.cursor()
 
-create_books_table = "CREATE TABLE IF NOT EXISTS books (bookid INT AUTO_INCREMENT PRIMARY KEY, title VARCHAR(255) NOT NULL, author VARCHAR(255) NOT NULL,status ENUM('avail', 'issue') NOT NULL);"
-create_books_issued_table = "CREATE TABLE IF NOT EXISTS books_issued (bookid INT,issueto VARCHAR(255));"
+create_books_table = "CREATE TABLE IF NOT EXISTS books (bookid VARCHAR(255) NOT NULL, title VARCHAR(255) NOT NULL, author VARCHAR(255) NOT NULL,status VARCHAR(255) NOT NULL);"
+create_books_issued_table = "CREATE TABLE IF NOT EXISTS books_issued (bookid VARCHAR(255),issueto VARCHAR(255));"
 
 cur.execute(create_books_table)
 cur.execute(create_books_issued_table)
