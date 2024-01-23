@@ -10,6 +10,7 @@ cur = con.cursor()
 
 # Enter Table Names here
 bookTable = "books" 
+issueTable = "book_issued"
     
 def View(): 
     
@@ -34,14 +35,15 @@ def View():
     labelFrame.place(relx=0.1,rely=0.3,relwidth=0.8,relheight=0.5)
     y = 0.25
     
-    Label(labelFrame, text="%-10s%-40s%-30s%-20s"%('BID','Title','Author','Status'),bg='black',fg='white').place(relx=0.07,rely=0.1)
-    Label(labelFrame, text="----------------------------------------------------------------------------",bg='black',fg='white').place(relx=0.05,rely=0.2)
-    getBooks = "select * from "+bookTable
+    Label(labelFrame, text="%-10s%-40s%-20s%-30s%-20s"%('BID','Title','Author','Status', 'issued to'),bg='black',fg='white').place(relx=0.07,rely=0.1)
+    Label(labelFrame, text="-------------------------------------------------------------------------------------------------------------------",bg='black',fg='white').place(relx=0,rely=0.2)
+    getBooks = "SELECT books.bookid, books.title, books.author, books.status, books_issued.issueto FROM books LEFT JOIN books_issued ON books.bookid = books_issued.bookid"
+
     try:
         cur.execute(getBooks)
         con.commit()
         for i in cur:
-            Label(labelFrame, text="%-10s%-30s%-30s%-20s"%(i[0],i[1],i[2],i[3]),bg='black',fg='white').place(relx=0.07,rely=y)
+            Label(labelFrame, text="%-10s%-40s%-20s%-30s%-20s"%(i[0],i[1],i[2],i[3],i[4]),bg='black',fg='white').place(relx=0.07,rely=y)
             y += 0.1
     except:
         messagebox.showinfo("Failed to fetch files from database")
