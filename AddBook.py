@@ -7,8 +7,7 @@ def bookRegister():
     bid = bookInfo1.get()
     title = bookInfo2.get()
     author = bookInfo3.get()
-    status = bookInfo4.get()
-    status = status.lower()  # Convert to lowercase here
+    status = 'avail'
 
     # Corrected INSERT INTO query
     query = 'INSERT INTO books(bookid, title, author, status) VALUES (%s, %s, %s, %s)'
@@ -82,13 +81,6 @@ def addBook():
         
     bookInfo3 = Entry(labelFrame)
     bookInfo3.place(relx=0.3,rely=0.50, relwidth=0.62, relheight=0.08)
-        
-    # Book Status
-    lb4 = Label(labelFrame,text="Status(Avail/issued) : ", bg='black', fg='white')
-    lb4.place(relx=0.05,rely=0.65, relheight=0.08)
-        
-    bookInfo4 = Entry(labelFrame)
-    bookInfo4.place(relx=0.3,rely=0.65, relwidth=0.62, relheight=0.08)
         
     #Submit Button
     SubmitBtn = Button(root,text="SUBMIT",bg='#d1ccc0', fg='black',command=bookRegister)
